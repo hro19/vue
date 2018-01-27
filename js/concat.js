@@ -1,18 +1,25 @@
-Vue.component('my-component', {
-  template: '<div>A custom component!</div>'
-})
 
    new Vue({
       el: '.app',
+      template:
+      '<div class="app">'+
+        '<h1 v-for="val in consulting.concat(contents,cop)" v-if="currentSlugFlg(val)">{{val.name}}</h1>'+
+          '<ul>'+
+              '<li v-for="val in consulting" v-bind:class="{ active:currentSlugFlg(val) }"><a v-bind:href="val.slug">{{ val.name }}</a></li>'+
+          '</ul>'+
+          '<hr>'+
+          '<ul>'+
+              '<li v-for="val in contents" v-bind:class="{ active: currentSlugFlg(val) }"><a v-bind:href="val.slug">{{ val.name }}</a></li>'+
+          '</ul>'+
+          '<hr>'+
+          '<ul>'+
+            '<li v-for="val in cop" v-bind:class="{ active: currentSlugFlg(val) }"><a v-bind:href="val.slug">{{ val.name }}</a></li>'+
+          '</ul>'+
+      '</div>',
       methods:{
         currentSlugFlg:function(currentData){
            //return currentData.slug === "/consulting/aaaa/"
            return currentData.slug === location.pathname;
-        },
-        isCurrent:function(currentData){
-           //return currentData.slug === "/consulting/aaaa/"
-           return currentData.slug === location.pathname;
-          //return false;
         }
       },
       data: {
@@ -64,12 +71,26 @@ Vue.component('my-component', {
 
 new Vue({
   el: '.hero',
-  template: 
+  data () {
+    return {
+      msg: 'Hello World!',
+      a: 22
+    }
+  },
+  computed: {
+    // get のみ。必要なのは関数一つだけ
+    aDouble: function () {
+      return this.a * 2
+    }
+  },
+  template:
+  '<div class="hero">'+
   '<section>'+
   '<h3>コンポーネントタイトル</h3>'+
   '<div>'+
   '<p>hello!</p>'+
-  '<aside>コンポーネント化成功</aside>'+
+  '<aside>{{aDouble}}コンポーネント化成功{{msg}}</aside>'+
   '</div>'+
-  '</section>',
+  '</section>'+
+  '</div>',
 })

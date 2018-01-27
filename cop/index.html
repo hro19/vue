@@ -11,22 +11,7 @@
 
 
  <section>
-  <div class="app">
-    <h1 v-for="val in consulting.concat(contents,cop)" v-if="currentSlugFlg(val)">{{val.name}}</h1>
-    <ul>
-      <li v-for="val in consulting" v-bind:class="{ active:isCurrent(val) }"><a v-bind:href="val.slug">{{ val.name }}</a></li>
-    </ul>
-    <hr>
-    <ul>
-      <li v-for="val in contents" v-bind:class="{ active: isCurrent(val) }"><a v-bind:href="val.slug">{{ val.name }}</a></li>
-    </ul>
-    <hr>
-    <ul>
-      <li v-for="val in cop" v-bind:class="{ active: isCurrent(val) }"><a v-bind:href="val.slug">{{ val.name }}</a></li>
-    </ul>
-    <hr><hr>
-    <my-component></my-component>
-  </div>
+  <div class="app"></div>
   </section>
 <hr><hr>
 <div class="hero"></div>
