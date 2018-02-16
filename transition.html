@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+<link rel="stylesheet" href="/css/style.css">
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<style>
+.v-enter-active, .v-leave-active {
+  transition: 0.5s
+}
+
+.v-enter, .v-leave-to {
+  opacity: 0
+}
+
+
+.fade-enter-active, .fade-leave-active {
+  transition: all .8s ease;
+  opacity: 1;
+}
+.fade-enter,
+.fade-leave-active,
+.fade-leave{
+  opacity: 0;
+}
+
+</style>
+ <section>
+  <div id="app">{{msg}},{{msg2}}</div>
+  </section>
+<hr><hr>
+<div class="hero">
+	{{msg}},{{msg2}}<br>
+    <a href="javascript:void(0)" @click="show2 = !show2">
+      押して
+    </a>
+    <transition>
+      <p v-if="show2">加藤恵</p>
+    </transition>
+
+</div>
+
+
+
+<div class="tab" id="tab">
+  <nav>
+    <ul>
+      <!--
+        イベントの結びつきには @ を使います。
+        クリックされると先程の Vue インスタンスの show が呼び出されます。
+      -->
+      <li @click="show('tabA')">タブA</li>
+      <li @click="show('tabB')">タブB</li>
+      <li @click="show('tabC')">タブC</li>
+    </ul>
+  </nav>
+  <div class="tabBody">
+
+    <transition name="fade" mode="out-in">
+
+      <section v-if="isCurrent('tabA')" key="tabA">
+        <h2>タブA内容</h2>
+        <p>AテキストAテキストAテキストAテキストAテキスト</p>
+      </section>
+      <section v-if="isCurrent('tabB')" key="tabB">
+        <h2>タブB内容</h2>
+        <p>文章入ります内容はBです</p>
+      </section>
+      <section v-if="isCurrent('tabC')" key="tabC">
+        <h2>タブC内容</h2>
+        <p>タブCを押したとき表示されます。</p>
+      </section>
+    </transition>
+  </div>
+</div>
+
+
+<script>
+	new Vue({
+		el:'#app',
+		data:{
+			msg:"aiuel",
+			msg2:"manbnme"
+		},
+	})
+
+	new Vue({
+		el:'.hero',
+		data:{
+			msg:"rrrrre",
+			msg2:"vvvvvvopppp",
+			show2:false
+		}
+	})
+
+
+new Vue({
+  el:'#tab',
+  data:{
+    current:'tabA'
+  },
+  methods:{
+    // これは methods 内では this.show()、テンプレート内では show() として使用できます。
+    show:function(name){
+      this.current = name;
+    },
+    isCurrent:function(name){
+      return this.current == name;
+    }
+  }
+})
+</script>
+</body>
+</html>
