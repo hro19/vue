@@ -23,7 +23,6 @@
 		<nav class="gNavi">
 			<ul>
 				<li><router-link to="/">ホーム</router-link></li>
-				<li><router-link to="/111222">静的</router-link></li>
 				<li v-for="post in posts"><router-link :to="'/'+post.id">{{post.title.rendered}}</router-link></li>
 			</ul>
 		</nav>

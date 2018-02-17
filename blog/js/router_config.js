@@ -1,8 +1,17 @@
 //テンプレートの設定
 var SingleBlog = { template: `
     <div class="page page--message">
-      <h2>SingleBlogのテンプレートです!!{{ $route.params.id }}</h2>
-      <div class="blog_content">
+      <div v-for="(post, index) in $root.posts">
+        <div v-if="post.id == $route.params.id">
+          <h2>SingleBlogのテンプレートです!!</h2>
+          <div class="blog_content">
+            <p>{{post.id}}</p>
+            <p>{{post.date}}</p>
+            <p>{{post.title.rendered}}</p>
+            <p><img :src="post.acf.メッセージ画像.sizes.medium"></p>
+            <p>{{post.id}}</p>
+          </div>
+        </div>
       </div>
     </div>`
   }
@@ -10,12 +19,8 @@ var SingleBlog = { template: `
 var Home = { template:  `
   <div class="page page--home">
     <h2>ここはホームです、一覧表示させます<h2>
-      <ul v-for="post in posts">
-    <li>
-      <a v-bind:href="post.link" target="_blank">
-        {{post.title.rendered}}<br>
-      </a>
-      </li>
+      <ul v-for="post in $root.posts">
+        <li><router-link :to="'/'+post.id">{{post.title.rendered}}</router-link></li>
     </ul>
   </div>
   ` }
@@ -68,7 +73,7 @@ var app = new Vue({
   },
   methods: {
     getPosts: function(){
-      axios.get( 'http://026.test55.net/wp/wp-json/wp/v2/member/?_embed' )
+      axios.get( 'http://026.test55.net/wp/wp-json/wp/v2/member/?_embed&per_page=7' )
       .then( response => {
         this.posts = response.data;
       } )
