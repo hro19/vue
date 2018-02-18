@@ -5,12 +5,28 @@ var SingleBlog = { template: `
         <div v-if="post.id == $route.params.id">
           <h2>SingleBlogのテンプレートです!!</h2>
           <div class="blog_content">
-            <p>{{post.id}}</p>
-            <p>{{post.date}}</p>
-            <p>{{post.title.rendered}}</p>
-            <p><img :src="post.acf.メッセージ画像.sizes.medium"></p>
-            <p>{{post.id}}</p>
+            <p>投稿ID：{{post.id}}</p>
+            <p>投稿日：{{post.date}}</p>
+            <p>投稿タイトル：{{post.title.rendered}}</p>
+            <p><img :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url"></p>
           </div>
+
+
+
+          <div v-for="(contents, index) in post.acf.コンテンツ">
+
+            <div v-if="contents.acf_fc_layout ==='テキスト'">
+              <div v-html="contents.テキスト"></div>
+            </div>
+            <div v-else-if="contents.acf_fc_layout ==='画像エリア'">
+              <figure>
+                <img :src="contents.画像.sizes.thumbnail">
+                <figcaption v-if="contents.画像の注釈文">{{contents.画像の注釈文}}</figcaption>
+              </figure>
+            </div>
+
+          </div>
+
         </div>
       </div>
     </div>`
@@ -19,9 +35,19 @@ var SingleBlog = { template: `
 var Home = { template:  `
   <div class="page page--home">
     <h2>ここはホームです、一覧表示させます<h2>
-      <ul v-for="post in $root.posts">
-        <li><router-link :to="'/'+post.id">{{post.title.rendered}}</router-link></li>
+      <ul>
+        <li v-for="post in $root.posts">
+          <router-link :to="'/'+post.id">
+            {{post.title.rendered}}
+            <img :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url">
+          </router-link>
+        </li>
     </ul>
+    <aside>
+      <p>投稿日付の整形のやり方</p>
+      <p>urlのアスタリスクマークを消す</p>
+      <p>acfのフレキシブルコンテンツの記述法（if文が書けない状況）</p>
+    </aside>
   </div>
   ` }
 
@@ -73,7 +99,7 @@ var app = new Vue({
   },
   methods: {
     getPosts: function(){
-      axios.get( 'http://026.test55.net/wp/wp-json/wp/v2/member/?_embed&per_page=7' )
+      axios.get( 'http://026.test55.net/wp-json/wp/v2/news/?_embed&per_page=7' )
       .then( response => {
         this.posts = response.data;
       } )
