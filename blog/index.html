@@ -19,7 +19,7 @@
 <body>
 <div id="wrapper">
 	<header id="header">
-		<h1><router-link to="/"><img src="img/logo.png" alt=""></router-link></h1>
+		<h1><router-link to="/">{{ $route.params.id }}</router-link></h1>
 		<nav class="gNavi">
 			<ul>
 				<li><router-link to="/">ホーム</router-link></li>
@@ -28,8 +28,8 @@
 		</nav>
 	</header><!--//header -->
 	<div class="contents">
-		<transition name="fade">
-			<router-view></router-view>
+		<transition name="fade" mode="out-in">
+			<router-view :key="$route.params.id"></router-view>
 		</transition>
 	</div><!--//contents -->
 

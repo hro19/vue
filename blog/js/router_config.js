@@ -1,8 +1,8 @@
 //テンプレートの設定
 var SingleBlog = { template: `
     <div class="page page--message">
-      <div v-for="(post, index) in $root.posts">
-        <div v-if="post.id == $route.params.id">
+      <template v-for="(post, index) in $root.posts">
+        <div class="post" v-if="post.id == $route.params.id">
           <h2>SingleBlogのテンプレートです!!</h2>
           <div class="blog_content">
             <p>投稿ID：{{post.id}}</p>
@@ -11,24 +11,23 @@ var SingleBlog = { template: `
             <p><img :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url"></p>
           </div>
 
+          <template v-for="(contents, index) in post.acf.コンテンツ">
 
-
-          <div v-for="(contents, index) in post.acf.コンテンツ">
-
-            <div v-if="contents.acf_fc_layout ==='テキスト'">
+            <template v-if="contents.acf_fc_layout ==='テキスト'">
               <div v-html="contents.テキスト"></div>
-            </div>
-            <div v-else-if="contents.acf_fc_layout ==='画像エリア'">
+            </template>
+
+            <template v-else-if="contents.acf_fc_layout ==='画像エリア'">
               <figure>
                 <img :src="contents.画像.sizes.thumbnail">
                 <figcaption v-if="contents.画像の注釈文">{{contents.画像の注釈文}}</figcaption>
               </figure>
-            </div>
+            </template>
 
-          </div>
+          </template>
 
         </div>
-      </div>
+      </template>
     </div>`
   }
 
@@ -46,7 +45,8 @@ var Home = { template:  `
     <aside>
       <p>投稿日付の整形のやり方</p>
       <p>urlのアスタリスクマークを消す</p>
-      <p>acfのフレキシブルコンテンツの記述法（if文が書けない状況）</p>
+      <p>[解決]acfのフレキシブルコンテンツの記述法</p>
+      <p>h1要素にはif文でトップページと記事ページで振り分けたい（どの要素で振り分けたらよいのか）</p>
     </aside>
   </div>
   ` }
