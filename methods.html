@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head>
+
+    <title>vue key</title>
+    <link rel="stylesheet" href="/css/style.css">
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+<style>
+
+</style>
+
+</head>
+<body>
+<div id="app">
+{{currentTab}}
+<br><br>
+{{msg}}
+<br><br>
+{{rendTab()}}
+<br><br>
+
+<button @click=cheTab('tabA')>タブA</button>
+<button @click=cheTab('tabB')>タブB</button>
+<button @click=cheTab('tabC')>タブC</button>
+
+</div>
+
+<script>
+const app = new Vue({
+	el:'#app',
+	data:{
+		msg:'やっせ',
+		currentTab:'tabA'
+	},
+	methods:{
+		cheTab:function(name){
+			this.currentTab = name
+		},
+		rendTab:function(currentTab){
+			return this.currentTab + 'です'
+		}
+	}
+})
+
+</script>
+</body>
+</html>
