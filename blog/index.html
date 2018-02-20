@@ -19,7 +19,10 @@
 <body>
 <div id="wrapper">
 	<header id="header">
-		<h1><router-link to="/">{{ $route.params.id }}</router-link></h1>
+		<h1 v-if="!$route.params.id"><router-link to="/">LOGO</router-link></h1>
+		<h1 v-else-if="($route.params.id === '188')"><router-link to="/188">{{ $route.params.id }}</router-link></h1>
+		<h1 v-else-if="$route.params.id"><router-link :to="'/'+$route.params.id">{{ $route.params.id }}</router-link></h1>
+
 		<nav class="gNavi">
 			<ul>
 				<li><router-link to="/">ホーム</router-link></li>
@@ -27,6 +30,7 @@
 			</ul>
 		</nav>
 	</header><!--//header -->
+
 	<div class="contents">
 		<transition name="fade" mode="out-in">
 			<router-view :key="$route.params.id"></router-view>
