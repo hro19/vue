@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+<link rel="stylesheet" href="/css/style.css">
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  
+<div id="wrapper">
+
+  <!-- <p><input v-model="msg"></p> -->
+
+  <div class="contents">
+    <transition name="fade" mode="out-in">
+
+
+  <div class="page page--home"><br>
+    <h2>ここはホームです、一覧表示させます。{{ msg }}。<h2>
+      <ul>
+        <li v-for="(post, index) in posts">
+            {{post.title.rendered}}
+            {{ kakou_posts[index].yy }}/{{ kakou_posts[index].mm }}/{{ kakou_posts[index].dd }}
+            <img :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url">
+        </li>
+    </ul>
+  </div>
+
+
+
+    </transition>
+  </div><!--//contents -->
+
+</div><!--//wrapper -->
+
+
+<script>
+  
+var app = new Vue({
+  el:'#wrapper',
+  data: {
+    msg:'メッセ',
+    kakou_posts:[],
+    posts: []
+  },
+  created: function(){
+    this.getPosts();
+  },
+  methods: {
+    getPosts: function(){
+      axios.get( 'http://026.test55.net/wp-json/wp/v2/news/?_embed&per_page=7' )
+      .then( response => {
+        this.posts = response.data;
+
+        for(var i = 0; i < this.posts.length; i++ ){
+          let moto = this.posts[i].date
+          setting = new Date(moto);
+
+          this.kakou_posts.push({
+             yy : setting.getFullYear(),
+             mm : (setting.getMonth() + 1),
+             dd : setting.getDate()
+          })
+        }
+        return this.kakou_posts
+      } )
+      .catch( error => {
+        window.alert( error );
+      } );
+    },
+  }
+})
+
+</script>
+</body>
+</html>
