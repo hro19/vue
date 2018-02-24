@@ -33,7 +33,7 @@ var SingleBlog = { template: `
 
 var Home = { template:  `
   <div class="page page--home">
-    <h2>ここはホームです、一覧表示させます<h2>
+    <h2>ここはホームです、一覧表示させます</h2>
       <ul>
         <li v-for="post in $root.posts">
           <router-link :to="'/'+post.id">
@@ -92,10 +92,16 @@ var app = new Vue({
   el:'#wrapper',
   data: {
     msg:'メッセ',
+    singleid:'',
     posts: []
+  },
+  watch: {
+    // ルートが変更されたらこのメソッドを再び呼び出します
+    '$route': 'nowRoute'
   },
   created: function(){
     this.getPosts();
+    this.nowRoute ();
   },
   methods: {
     getPosts: function(){
@@ -107,5 +113,8 @@ var app = new Vue({
         window.alert( error );
       } );
     },
+    nowRoute () {
+	    this.singleid = this.$route.params.id
+    }
   }
 })

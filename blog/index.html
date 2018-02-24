@@ -18,7 +18,7 @@
 
 <body>
 <div id="wrapper">
-	<header id="header">
+<header id="header">{{singleid}}
 		<h1 v-if="!$route.params.id"><router-link to="/">LOGO</router-link></h1>
 		<h1 v-else-if="($route.params.id === '188')"><router-link to="/188">{{ $route.params.id }}</router-link></h1>
 		<h1 v-else-if="$route.params.id"><router-link :to="'/'+$route.params.id">{{ $route.params.id }}</router-link></h1>
@@ -40,5 +40,6 @@
 </div><!--//wrapper -->
 
 <script src="/blog/js/router_config.js"></script>
+<script>console.log(app.$el)</script>
 </body>
 </html>
